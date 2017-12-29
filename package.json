@@ -1,0 +1,32 @@
+{
+  "name": "react-native-appicons",
+  "version": "1.0.0",
+  "description": "Creates/manages application icons for RN apps",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhdeck/react-native-appicons.git"
+  },
+  "author": "Ray Deck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rhdeck/react-native-appicons/issues"
+  },
+  "homepage": "https://github.com/rhdeck/react-native-appicons#readme",
+  "dependencies": {
+    "child-process-promise": "^2.2.1",
+    "inquirer": "^4.0.1",
+    "request": "^2.83.0",
+    "temp": "^0.8.3"
+  },
+  "bin": "linkicons.js",
+  "rnpm": {
+    "plugin": "index.js",
+    "commands": {
+      "postlink": "./node_modules/.bin/react-native-appicons"
+    }
+  }
+}
