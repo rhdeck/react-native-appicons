@@ -45,7 +45,7 @@ module.exports = {
           saveAppIconPath(answers.pathorurl);
           cp.spawn(
             "/usr/bin/env",
-            ["node", "./node_modules/.bin/react-native-make-appicons"],
+            ["node", "./node_modules/.bin/react-native-appicons"],
             { stdio: "inherit" }
           );
         });
@@ -53,7 +53,7 @@ module.exports = {
       saveAppIconPath(argv[0]);
       cp.spawn(
         "/usr/bin/env",
-        ["node", "./node_modules/.bin/react-native-make-appicons"],
+        ["node", "./node_modules/.bin/react-native-appicons"],
         {
           stdio: "inherit"
         }
