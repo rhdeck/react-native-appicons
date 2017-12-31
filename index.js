@@ -1,6 +1,7 @@
 const fs = require("fs");
 const inquirer = require("inquirer");
 const cp = require("child_process");
+const url = require("url");
 function getPackagePath() {
   return process.cwd() + "/package.json";
 }
@@ -36,7 +37,16 @@ module.exports = {
           message:
             "What is the path or URL of the image you would like to base your application icons on? \n(should be big, ideally at least 1024x1024)",
           validate: answer => {
-            if (answer && answer.length) {
+            answer = answer.trim();
+            try {
+              const u = new url.URL(answer);
+              return true;
+            } catch (err) {
+              const rp = fs.realpathSync(answer);
+              if (!fs.existsSync(rp)) {
+                console.log("Could not validate the location", answer);
+                return false;
+              }
               return true;
             }
           }
