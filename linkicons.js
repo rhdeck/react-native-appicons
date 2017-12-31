@@ -7,6 +7,29 @@ const glob = require("glob");
 const url = require("url");
 const tmp = require("tmp");
 const request = require("request");
+
+const androidinfo = [
+  {
+    path: "android/app/main/res/mipmap-mdpi/ic_launcher.png",
+    height: 48,
+    width: 48
+  },
+  {
+    path: "android/app/main/res/mipmap-hdpi/ic_launcher.png",
+    height: 72,
+    width: 72
+  },
+  {
+    path: "android/app/main/res/mipmap-xhdpi/ic_launcher.png",
+    height: 96,
+    width: 96
+  },
+  {
+    path: "android/app/main/res/mipmap-xxhdpi/ic_launcher.png",
+    height: 144,
+    width: 144
+  }
+];
 function resize(source, target, width, height) {
   if (!height) height = width;
   if (!source || !target || !width) {
@@ -130,6 +153,21 @@ if (!contents) {
 }
 loadImage().then(
   imagepath => {
+    androidsizes.map(obj => {
+      const rp = fs.realpathSync(
+        path.join(pricess.cwd(), ...obj.path.split("/"))
+      );
+      if (fs.existsSync(rp) || fs.existsSync(path.dirname(rp))) {
+        resize(imagepath, rp, obj.width, obj.height).then(
+          target => {},
+          () => {
+            console.log(
+              "This module requires imagemagick to run. \nTo install on MacOS:\n port install imagemagick\n -OR-\n brew install imagemagick\n\nOn Linux, try aptitude:\n apt-get install imagemagick"
+            );
+          }
+        );
+      }
+    });
     contents.images = contents.images.map(obj => {
       const hw = obj.size.split("x");
       const scale = parseInt(obj.scale.substring(0, obj.scale.length - 1));
