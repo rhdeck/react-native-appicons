@@ -155,7 +155,7 @@ loadImage().then(
   imagepath => {
     androidinfo.map(obj => {
       const rp = fs.realpathSync(
-        path.join(pricess.cwd(), ...obj.path.split("/"))
+        path.join(process.cwd(), ...obj.path.split("/"))
       );
       if (fs.existsSync(rp) || fs.existsSync(path.dirname(rp))) {
         resize(imagepath, rp, obj.width, obj.height).then(
@@ -164,6 +164,7 @@ loadImage().then(
             console.log(
               "This module requires imagemagick to run. \nTo install on MacOS:\n port install imagemagick\n -OR-\n brew install imagemagick\n\nOn Linux, try aptitude:\n apt-get install imagemagick"
             );
+            process.exit();
           }
         );
       }
