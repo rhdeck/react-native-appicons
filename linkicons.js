@@ -10,22 +10,22 @@ const request = require("request");
 
 const androidinfo = [
   {
-    path: "android/app/main/res/mipmap-mdpi/ic_launcher.png",
+    path: "android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
     height: 48,
     width: 48
   },
   {
-    path: "android/app/main/res/mipmap-hdpi/ic_launcher.png",
+    path: "android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
     height: 72,
     width: 72
   },
   {
-    path: "android/app/main/res/mipmap-xhdpi/ic_launcher.png",
+    path: "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
     height: 96,
     width: 96
   },
   {
-    path: "android/app/main/res/mipmap-xxhdpi/ic_launcher.png",
+    path: "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
     height: 144,
     width: 144
   }
