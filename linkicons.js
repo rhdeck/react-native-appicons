@@ -153,7 +153,7 @@ if (!contents) {
 }
 loadImage().then(
   imagepath => {
-    androidsizes.map(obj => {
+    androidinfo.map(obj => {
       const rp = fs.realpathSync(
         path.join(pricess.cwd(), ...obj.path.split("/"))
       );
