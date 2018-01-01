@@ -21,7 +21,7 @@ Best practice is to select an image at least 1024x1024 in size for best presenta
 
 # Limitations
 
-This is currently for IOS-based RN apps only
+This is for iOS and Android apps only. No support for Windows.
 
 # Dependencies
 
