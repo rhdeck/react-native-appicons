@@ -169,6 +169,7 @@ loadImage().then(
         );
       }
     });
+    console.log("Successfully created Android application icons");
     contents.images = contents.images.map(obj => {
       const hw = obj.size.split("x");
       const scale = parseInt(obj.scale.substring(0, obj.scale.length - 1));
@@ -197,6 +198,6 @@ loadImage().then(
   },
   errormessage => {
     console.log("Could not load the starting image", errormessage);
-    pricess.exit();
+    process.exit();
   }
 );
