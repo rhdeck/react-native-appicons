@@ -5,7 +5,7 @@ No more "targets" - easily apply beautiful app icons without ever opening XCode.
 # Usage
 
 ```
-yarn add react-native-appicons
+yarn add react-native-appicons --dev
 react-native setappicon
 ```
 
