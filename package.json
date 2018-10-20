@@ -1,6 +1,6 @@
 {
   "name": "react-native-appicons",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Creates/manages application icons for RN apps",
   "main": "index.js",
   "scripts": {
