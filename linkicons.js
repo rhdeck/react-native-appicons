@@ -12,22 +12,32 @@ const androidinfo = [
   {
     path: "android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
     height: 48,
-    width: 48
+    width: 48,
+    roundTarget: "android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png"
   },
   {
     path: "android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
     height: 72,
-    width: 72
+    width: 72,
+    roundTarget: "android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
   },
   {
     path: "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
     height: 96,
-    width: 96
+    width: 96,
+    roundTarget: "android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png"
   },
   {
     path: "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
     height: 144,
-    width: 144
+    width: 144,
+    roundTarget: "android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
+  },
+  {
+    path: "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+    height: 192,
+    width: 192,
+    roundTarget: "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
   }
 ];
 function resize(source, target, width, height) {
@@ -65,6 +75,23 @@ function resize(source, target, width, height) {
           reject("Could not create the appropriate icon file", target, error);
         }
       );
+  });
+}
+function makeRound(source, target, width, height) {
+  const halfWidth = (width / 2 - 1).toFixed(0);
+  const halfHeight = (height / 2 - 1).toFixed(0);
+  const cloneString = `\\( +clone -threshold -1 -negate -fill white -draw "circle ${halfWidth},${halfHeight} ${halfWidth},0" \\)`;
+  const commandLine = `/usr/bin/env convert ${source} -respect-parentheses ${cloneString} -alpha off -compose copy_opacity -composite ${target}`;
+  return new Promise((resolve, reject) => {
+    cpp.exec(commandLine, { stdio: "inherit" }).then(
+      () => {
+        resolve(target);
+      },
+      error => {
+        console.error("Could not create the round icon file", target, error);
+        resolve(null);
+      }
+    );
   });
 }
 var contentsJSON = null;
@@ -115,9 +142,12 @@ function loadImage() {
     console.log('There us no appicon specified. Run "react-native setappicon"');
     process.exit();
   }
-  uri = new url.URL(imagestart);
+  let uri;
+  try {
+    uri = new url.URL(imagestart);
+  } catch (e) {}
   return new Promise((resolve, reject) => {
-    if (uri.protocol.length) {
+    if (uri && uri.protocol.length) {
       //Get the damn file
       const tmppath = tmp.fileSync().name;
       const bn = path.basename(uri.pathname);
@@ -159,7 +189,12 @@ loadImage().then(
       );
       if (fs.existsSync(rp) || fs.existsSync(path.dirname(rp))) {
         resize(imagepath, rp, obj.width, obj.height).then(
-          target => {},
+          target => {
+            const newRP = fs.realpathSync(
+              path.join(process.cwd(), ...obj.roundTarget.split("/"))
+            );
+            makeRound(target, newRP, obj.width, obj.height);
+          },
           () => {
             console.log(
               "This module requires imagemagick to run. \nTo install on MacOS:\n port install imagemagick\n -OR-\n brew install imagemagick\n\nOn Linux, try aptitude:\n apt-get install imagemagick"
