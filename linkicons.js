@@ -184,9 +184,10 @@ if (!contents) {
 loadImage().then(
   imagepath => {
     androidinfo.map(obj => {
-      const rp = fs.realpathSync(
-        path.join(process.cwd(), ...obj.path.split("/"))
-      );
+      const rp = path.join(process.cwd(), ...obj.path.split("/"));
+      // console.log("Relpath is ", relpath);
+
+      // const rp = fs.realpathSync(relpath);
       if (fs.existsSync(rp) || fs.existsSync(path.dirname(rp))) {
         resize(imagepath, rp, obj.width, obj.height).then(
           target => {
