@@ -23,11 +23,5 @@
     "request": "^2.83.0",
     "temp": "^0.8.3"
   },
-  "bin": "linkicons.js",
-  "rnpm": {
-    "plugin": "index.js",
-    "commands": {
-      "postlink": "./node_modules/.bin/react-native-appicons"
-    }
-  }
+  "bin": "linkicons.js"
 }
